@@ -1,0 +1,195 @@
+---
+title: "sesion 8"
+author: "Gerardo Hernandez Mondragon"
+date: "18-003-1784"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+MiRegresion <- function(x,y) {
+  numvar <- length(x);
+  suma <- 0;
+  for(i in 1:numvar){suma <- suma +x[i]}
+  xbarra <- suma/numvar;
+  suma <- 0;
+  for(i in 1:numvar){suma <- suma +y[i]}
+  ybarra <- suma/numvar;
+  suma <- 0;
+  for(i in 1:numvar){suma <- suma +(x[i]-xbarra)^2}
+  Sxx <- suma/numvar;
+  suma <- 0;
+  for(i in 1:numvar){suma <- suma+((x[i]-xbarra)*(y[i]-ybarra))}
+  Sxy <- suma/numvar;
+  Beta1  <- Sxy/Sxx;
+  Beta0  <- ybarra-Beta1*xbarra;
+  Ygorro <- Beta0+Beta1*x; 
+  resultado <- list(beta0 = Beta0,
+                    beta1 = Beta1,
+                    yest  = Ygorro)
+  return(resultado)
+}
+```
+
+  
+```{r}
+set.seed(123)
+numvar <- 150;
+x <- rnorm(numvar);      print(x)
+y <- 2*x +rnorm(numvar); print(y)
+
+
+plot(x,y)
+
+plot(x,y,main= 'Ejemplo de Regresion Lineal',
+     xlab = 'Variable Independiente',
+     ylab = 'Variable Dependiente')
+
+plot(x,y,main= 'Ejemplo de Regresion Lineal',
+     xlab = 'Variable Independiente',
+     ylab = 'Variable Dependiente',
+     col = 'blue')
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+set.seed(123)
+numvar <- 150;
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+x1 <- rnorm(numvar);      print(x1)
+y1 <- x1+rnorm(numvar); print(y1)
+Regresion <- MiRegresion(x1,y1)
+plot(x1,y1,main= 'Ejemplo 1 de Regresion Lineal',
+     xlab = 'Variable Independiente',
+     ylab = 'Variable Dependiente',
+     col = 'blue',
+     type = 'p')
+par(new=TRUE)
+plot(x1,Regresion$Yest,col='red',type='l')
+ygorro <- Regresion$yest
+hist(ygorro, main='Distribucion de los Errores de estimacion',
+     xlab='Errores',
+     ylab= 'Frecuencia',
+     col = rainbow(15, 0.25),
+     border = 'green')
+
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+x2 <- rnorm(numvar);      print(x2)
+y2 <- 9*x2 +rnorm(numvar); print(y2)
+Regresion <- MiRegresion(x2,y2)
+plot(x2,y2,main= 'Ejemplo 2 de Regresion Lineal',
+     xlab = 'Variable Independiente',
+     ylab = 'Variable Dependiente',
+     col = 'pink',
+     type = 'p')
+par(new=TRUE)
+plot(x2,Regresion$yest,col='red',type='l')
+ygorro <- Regresion$yest
+hist(ygorro, main='Ejmplo 2: Distribucion de los Errores de estimacion',
+     xlab='Errores',
+     ylab= 'Frecuencia',
+     col = rainbow(15, 0.25),
+     border = 'blue')
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+x3 <- rnorm(numvar);      print(x3)
+y3 <- -2*x3 +rnorm(numvar); print(y3)
+Regresion <- MiRegresion(x3,y3)
+plot(x3,y3,main= 'Ejemplo 3 de Regresion Lineal',
+     xlab = 'Variable Independiente',
+     ylab = 'Variable Dependiente',
+     col = 'green',
+     type = 'p')
+par(new=TRUE)
+plot(x3,Regresion$Yest,col='red',type='l')
+ygorro <- Regresion$yest
+hist(ygorro, main='Ejemplo 3: Distribucion de los Errores de estimacion',
+     xlab='Errores',
+     ylab= 'Frecuencia',
+     col = rainbow(15, 0.25),
+     border = 'pink')
+
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+x4 <- rnorm(numvar);      print(x4)
+y4 <- -2*x4 - rnorm(numvar); print(y4)
+Regresion <- MiRegresion(x4,y4)
+plot(x4,y4,main= 'Ejemplo 4 de Regresion Lineal',
+     xlab = 'Variable Independiente',
+     ylab = 'Variable Dependiente',
+     col = 'orange',
+     type = 'p')
+par(new=TRUE)
+plot(x4,Regresion$yest,col='red',type='l')
+ygorro <- Regresion$yest
+hist(ygorro, main='Ejempolo 4: Distribucion de los Errores de estimacion',
+     xlab='Errores',
+     ylab= 'Frecuencia',
+     col = rainbow(15, 0.25),
+     border = 'brown')
+
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+x5 <- rnorm(numvar);      print(x5)
+y5 <- -2*x5 - 2*rnorm(numvar); print(y5)
+Regresion <- MiRegresion(x5,y5)
+plot(x5,y5,main= 'Ejemplo 5 de Regresion Lineal',
+     xlab = 'Variable Independiente',
+     ylab = 'Variable Dependiente',
+     col = 'yellow',
+     type = 'p')
+par(new=TRUE)
+plot(x5,Regresion$yest,col='red',type='l')
+ygorro <- Regresion$yest
+hist(ygorro, main='Ejemplo 5: Distribucion de los Errores de estimacion',
+     xlab='Errores',
+     ylab= 'Frecuencia',
+     col = rainbow(15, 0.25),
+     border = 'red')
+
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+suma <- 0;
+for(i in 1:numvar){suma <- suma +x[i]}
+xbarra <- suma/numvar;
+
+suma <- 0;
+for(i in 1:numvar){suma <- suma +y[i]}
+ybarra <- suma/numvar;
+
+suma <- 0;
+for(i in 1:numvar){suma <- suma +(x[i]-xbarra)^2}
+Sxx <- suma/numvar
+
+suma <- 0;
+for(i in 1:numvar){suma <- suma+((x[i]-xbarra)*(y[i]-ybarra))}
+Sxy <- suma/numvar;
+
+Beta1 <- Sxy/Sxx;
+Beta0 <- ybarra-Beta1*xbarra
+
+ygorro <- Beta0+Beta1*x; print(ygorro)
+ErrorEst <- y-ygorro
+hist(ErrorEst)
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+
+x <- MiRegresion(x1,y1)
+# >>==<< >>==<< >>==<< >>==<< >>==<< >>==<< >>==<<
+x1 <- rnorm(numvar);      print(x1)
+y1 <- x1+rnorm(numvar); print(y1)
+Regresion <- MiRegresion(x1,y1)
+plot(x1,y1,main= 'Ejemplo 1 de Regresion Lineal',
+     xlab = 'Variable Independiente',
+     ylab = 'Variable Dependiente',
+     col = 'blue',
+     type = 'p')
+par(new=TRUE)
+plot(x1,Regresion$yest,col='red',type='l')
+ygorro <- Regresion$yest
+hist(ygorro, main='Distribucion de los Errores de estimacion',
+     xlab='Errores',
+     ylab= 'Frecuencia',
+     col = rainbow(15, 0.25),
+     border = 'green')
+```
